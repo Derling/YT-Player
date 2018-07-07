@@ -1,2 +1,2 @@
 # YT-Player
-Script that plays youtube videos and allow for video control with hot keys
+Script that plays youtube videos and allows for video control with hot keys
