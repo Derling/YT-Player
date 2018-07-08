@@ -11,11 +11,9 @@ def getDriver():
 		webdriver.Safari
 	]
 	installed_driver = None
-	print(DRIVERNOTFOUNDERROR())
 	for driver in drivers:
 		try:
 			installed_driver = driver()
-			print(f'driver found {driver}')
 			break
 		except DRIVERNOTFOUNDERROR:
 			continue
