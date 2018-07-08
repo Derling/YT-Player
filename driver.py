@@ -11,6 +11,7 @@ def getDriver():
 		webdriver.Safari
 	]
 	installed_driver = None
+	print(DRIVERNOTFOUNDERROR())
 	for driver in drivers:
 		try:
 			installed_driver = driver()
@@ -26,6 +27,7 @@ class Driver:
 	'''
 	YOUTUBEPLAYBUTTON = "ytp-play-button"
 	def start(self, url):
+		# **TODO** raise error if driver is None and if get functions raises an error
 		self.driver = getDriver()
 		self.driver.get(url)
 		self.running = True
