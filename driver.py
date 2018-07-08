@@ -1,4 +1,24 @@
-from selenium import webdriver
+from selenium import webdriver, common
+
+DRIVERNOTFOUNDERROR = common.exceptions.WebDriverException
+
+def getDriver():
+	# Most popular web browsers
+	drivers = [
+		webdriver.Chrome,
+		webdriver.Firefox,
+		webdriver.Edge,
+		webdriver.Safari
+	]
+	installed_driver = None
+	for driver in drivers:
+		try:
+			installed_driver = driver()
+			print(f'driver found {driver}')
+			break
+		except DRIVERNOTFOUNDERROR:
+			continue
+	return installed_driver
 
 class Driver:
 	'''
@@ -6,7 +26,7 @@ class Driver:
 	'''
 	YOUTUBEPLAYBUTTON = "ytp-play-button"
 	def start(self, url):
-		self.driver = webdriver.Chrome()
+		self.driver = getDriver()
 		self.driver.get(url)
 		self.running = True
 		self.playing = True
