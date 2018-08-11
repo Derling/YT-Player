@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from pynput import keyboard
 from driver import Driver
-from util.lib import get_combinations
+from util.lib import get_combinations, get_command_elem
 import argparse
 
 combinations = []
@@ -12,8 +12,8 @@ browser = Driver()
 
 def execute(command):
 	global browser
-	browser_command = getattr(browser, command)
-	browser_command()
+	element = get_command_elem(command)
+	browser.click_element(element)
 	if command == 'quit':
 		pass # TO-DO make a mechanism for making the context manager quit out when the command is quit
 

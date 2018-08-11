@@ -1,6 +1,11 @@
 from pynput import keyboard
 import sys
 
+COMMAND_ELEMENTS = {
+	'pauseplay': 'ytp-play-button',
+	'next': 'ytp-next-button'
+}
+
 COMBINATIONS = {
 	'darwin': { # combinations for mac machines
 		'next': [ # combinations for playing the next video
@@ -18,3 +23,6 @@ COMBINATIONS = {
 def get_combinations():
 	if sys.platform == 'darwin':
 		return COMBINATIONS['darwin']
+
+def get_command_elem(command):
+	return COMMAND_ELEMENTS.get(command, None)
