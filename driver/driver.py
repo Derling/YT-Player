@@ -17,7 +17,7 @@ def getDriver():
 			return installed_driver
 		except DRIVER_NOT_FOUND_ERROR:
 			pass
-	raise DRIVER_NOT_FOUND_ERROR
+	raise DRIVER_NOT_FOUND_ERROR("Could not find any web driver in PATH")
 
 class Driver:
 	'''
