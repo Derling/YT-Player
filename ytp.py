@@ -10,12 +10,19 @@ current = set()
 
 browser = Driver()
 
+last_command = None
+
 def execute(command):
 	global browser
-	element = get_command_elem(command)
-	browser.click_element(element)
+	global last_command
+
 	if command == 'quit':
-		pass # TO-DO make a mechanism for making the context manager quit out when the command is quit
+		browser.quit()
+	else:
+		element = get_command_elem(command)
+		browser.click_element(element)
+
+	last_command = command
 
 def key_in_combinations(key, combinations):
 	return any([key in combo for combo in combinations])
@@ -34,6 +41,8 @@ def on_press(key):
 def on_release(key):
 	if key in current:
 		current.remove(key)
+	if last_command == 'quit':
+		return False
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Play and pause youtube videos with custom hotkeys.")
