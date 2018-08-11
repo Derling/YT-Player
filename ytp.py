@@ -50,5 +50,6 @@ if __name__ == '__main__':
 	url = parser.parse_args().url
 	combinations = get_combinations()
 	browser.start(url)
+	print(combinations)
 	with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
 		listener.join()

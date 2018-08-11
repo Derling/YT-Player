@@ -8,21 +8,36 @@ COMMAND_ELEMENTS = {
 
 COMBINATIONS = {
 	'darwin': { # combinations for mac machines
-		'next': [ # combinations for playing the next video
+		'next': [
 			{keyboard.Key.cmd, keyboard.Key.shift, keyboard.Key.shift_r}
 		],
-		'pauseplay' : [ # combinations for pausing/playing a video on mac machines
+		'pauseplay' : [
 			{keyboard.Key.cmd, keyboard.Key.shift, keyboard.Key.alt_r}
 		],
-		'quit': [ # combinations for shutting everything down on mac machines
+		'quit': [
 			{keyboard.Key.cmd, keyboard.Key.ctrl, keyboard.Key.alt}
 		],
+	},
+	'win32': { # combinations for windows machines
+		'next': [
+			{keyboard.Key.ctrl_l, keyboard.Key.shift, keyboard.KeyCode.from_char(char='.')}
+		],
+		'pauseplay': [
+			{keyboard.Key.ctrl_l, keyboard.Key.shift, keyboard.KeyCode.from_char(char=',')}
+		],
+		'quit': [
+			{keyboard.Key.ctrl_l, keyboard.Key.shift, keyboard.Key.alt_l}
+		]
 	}
 }
 
 def get_combinations():
 	if sys.platform == 'darwin':
 		return COMBINATIONS['darwin']
+	elif sys.platform == 'win32':
+		return COMBINATIONS['win32']
+	else:
+		pass
 
 def get_command_elem(command):
 	return COMMAND_ELEMENTS.get(command, None)
