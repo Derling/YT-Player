@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from pynput import keyboard
 from driver import Driver
 import argparse
