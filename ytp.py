@@ -1,38 +1,45 @@
 #!/usr/bin/env python
 from pynput import keyboard
 from driver import Driver
+from util.lib import get_combinations
 import argparse
 
-# current hot keys for testing
-# need to make it configurable
-COMBINATIONS = [
-	{keyboard.Key.ctrl_l, keyboard.Key.shift, keyboard.KeyCode(char='p')},
-	{keyboard.Key.ctrl_l, keyboard.Key.shift, keyboard.KeyCode(char='P')}, 
-]
+combinations = []
 
 current = set()
 
 browser = Driver()
 
-def execute():
+def execute(command):
 	global browser
-	browser.pauseplay()
+	browser_command = getattr(browser, command)
+	browser_command()
+	if command == 'quit':
+		pass # TO-DO make a mechanism for making the context manager quit out when the command is quit
+
+def key_in_combinations(key, combinations):
+	return any([key in combo for combo in combinations])
+
+def current_keys_match_combinations(current, combinations):
+	return any(all(k in current for k in combo) for combo in combinations)
 
 def on_press(key):
-	if any([key in COMBO for COMBO in COMBINATIONS]):
-		current.add(key)
-		if any(all(k in current for k in COMBO) for COMBO in COMBINATIONS):
-			execute()
-			exit()
+	for command in combinations:
+		command_combos = combinations[command]
+		if key_in_combinations(key, command_combos):
+			current.add(key)
+			if current_keys_match_combinations(current, command_combos):
+				execute(command)
 
 def on_release(key):
-	if any([key in COMBO for COMBO in COMBINATIONS]):
+	if key in current:
 		current.remove(key)
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description="Play and pause youtube videos with hotkeys.")
+	parser = argparse.ArgumentParser(description="Play and pause youtube videos with custom hotkeys.")
 	parser.add_argument("-url", type=str, dest="url", help="url for youtube video/playlist")
 	url = parser.parse_args().url
+	combinations = get_combinations()
 	browser.start(url)
 	with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
 		listener.join()
