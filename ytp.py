@@ -45,8 +45,8 @@ def on_release(key):
 		return False
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description="Play and pause youtube videos with custom hotkeys.")
-	parser.add_argument("-url", type=str, dest="url", help="url for youtube video/playlist")
+	parser = argparse.ArgumentParser(description="play and pause youtube videos with custom hotkeys.")
+	parser.add_argument("url", type=str, help="url for youtube video/playlist")
 	url = parser.parse_args().url
 	combinations = get_combinations()
 	browser.start(url)
