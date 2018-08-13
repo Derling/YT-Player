@@ -55,5 +55,5 @@ def get_combinations():
 		pass
 
 def get_command_elem(command):
-	# Returns the corresponsing element name for the given command
+	# Returns the corresponsing element class name for the given command
 	return COMMAND_ELEMENTS.get(command, None)

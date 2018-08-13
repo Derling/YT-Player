@@ -11,7 +11,7 @@ combinations = []
 
 current = set()
 
-browser = Driver()
+browser = Driver(logger)
 
 last_command = None
 
@@ -45,15 +45,18 @@ def on_release(key):
 	if key in current:
 		current.remove(key)
 	if last_command == 'quit':
+		# This shuts down the keyboard listener
 		return False
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="play and pause youtube videos with custom hotkeys.")
 	parser.add_argument("url", type=str, help="url for youtube video/playlist")
 	url = parser.parse_args().url
-	combinations = get_combinations()
+
 	browser.start(url)
-	logger.info('browser opened')
+
+	combinations = get_combinations()
 	with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
 		logger.info('listener starting')
 		listener.join()
+		logger.info('exiting...')
