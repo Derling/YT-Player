@@ -12,7 +12,7 @@ COMMAND_ELEMENTS = {
 COMBINATIONS = {
 	'darwin': { # combinations for mac machines
 		'next': [
-			{keyboard.Key.cmd, keyboard.Key.shift, keyboard.Key.cmd_r}
+			{keyboard.Key.cmd, keyboard.Key.shift, keyboard.Key.alt}
 		],
 		'pauseplay' : [
 			{keyboard.Key.cmd, keyboard.Key.shift, keyboard.Key.alt_r}
