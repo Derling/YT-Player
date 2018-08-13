@@ -1,5 +1,8 @@
 from pynput import keyboard
+import logging
 import sys
+
+FORMATTER = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 
 COMMAND_ELEMENTS = {
 	'pauseplay': 'ytp-play-button',
@@ -31,7 +34,19 @@ COMBINATIONS = {
 	}
 }
 
+def get_logger(name, level=logging.INFO):
+	# Creates a logger
+	handler = logging.StreamHandler()
+	handler.setFormatter(FORMATTER)
+
+	logger = logging.getLogger(name)
+	logger.setLevel(level)
+	logger.addHandler(handler)
+
+	return logger
+
 def get_combinations():
+	# Returns combinations based on operating system
 	if sys.platform == 'darwin':
 		return COMBINATIONS['darwin']
 	elif sys.platform == 'win32':
@@ -40,4 +55,5 @@ def get_combinations():
 		pass
 
 def get_command_elem(command):
+	# Returns the corresponsing element name for the given command
 	return COMMAND_ELEMENTS.get(command, None)

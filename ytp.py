@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 from pynput import keyboard
 from driver import Driver
-from util.lib import get_combinations, get_command_elem
+from util.lib import get_combinations, get_command_elem, get_logger
 import argparse
+import logging
+
+logger = get_logger('ytp')
 
 combinations = []
 
@@ -50,6 +53,7 @@ if __name__ == '__main__':
 	url = parser.parse_args().url
 	combinations = get_combinations()
 	browser.start(url)
-	print(combinations)
+	logger.info('browser opened')
 	with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+		logger.info('listener starting')
 		listener.join()
