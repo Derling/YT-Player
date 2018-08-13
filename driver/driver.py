@@ -28,6 +28,7 @@ class Driver:
 		self.logger = logger
 
 	def start(self, url):
+		# Starts the selenium web driver on a given url
 		self.driver = getDriver()
 		self.logger.info("opening selenium")
 		self.driver.get(url)
@@ -35,23 +36,26 @@ class Driver:
 		self.playing = True
 
 	def quit(self):
+		# Shut's down the selenium web driver
 		self.logger.info("shutting down selenium")
 		self.driver.quit()
 
-	def click_element(self, element):
-		self.logger.info(get_element_msg(element, self.playing))
+	def click_element(self, element_class):
+		# Clicks on an element based on the element's class
+		self.logger.info(get_element_msg(element_class, self.playing))
 		
 		try:
-			play_elem = self.driver.find_element_by_class_name(element)
+			play_elem = self.driver.find_element_by_class_name(element_class)
 			play_elem.click()
 		except WEBPAGE_LOADING_ERROR:
 			sleep(5)
 			play_elem.click()
 
-		if element == AUDIO_CONTROL:
+		if element_class == AUDIO_CONTROL:
 			self.playing = not self.playing
 		else:
 			self.playing = True
 
 	def get_title(self):
-		return self.driver.title[:-10]
+		# Return the tile of the url the web driver is on
+		return self.driver.title[:-10] # There is a " - youtube" suffix on youtube videos

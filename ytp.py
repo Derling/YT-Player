@@ -5,14 +5,11 @@ from util.lib import get_combinations, get_command_elem, get_logger
 import argparse
 import logging
 
+# global vars
 logger = get_logger('ytp')
-
 combinations = []
-
 current = set()
-
 browser = Driver(logger)
-
 last_command = None
 
 def execute(command):
@@ -34,6 +31,7 @@ def current_keys_match_combinations(current, combinations):
 	return any(all(k in current for k in combo) for combo in combinations)
 
 def on_press(key):
+	# Handle key presses 
 	for command in combinations:
 		command_combos = combinations[command]
 		if key_in_combinations(key, command_combos):
